@@ -23,7 +23,7 @@ public class User {
 	
 	private String email;
 	
-	private LanguageOption wantToLearnLang;
+	private LanguageOption wantToLearnLanguage;
 	
 	
 	

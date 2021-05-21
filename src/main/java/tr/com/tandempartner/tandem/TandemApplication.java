@@ -14,6 +14,7 @@ public class TandemApplication {
 	
 		SpringApplication.run(TandemApplication.class, args);
 		
+		
 	}
 
 }

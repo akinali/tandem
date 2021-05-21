@@ -1,5 +1,8 @@
 package tr.com.tandempartner.tandem.dao;
 
-public class UserDAOBean implements UserDAO{
+import org.springframework.stereotype.Component;
+
+@Component
+public class UserDAOBean  implements UserDAO {
 
 }
