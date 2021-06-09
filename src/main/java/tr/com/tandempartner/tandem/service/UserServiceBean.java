@@ -1,32 +1,43 @@
 package tr.com.tandempartner.tandem.service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import tr.com.tandempartner.tandem.dao.UserDAO;
 import tr.com.tandempartner.tandem.entity.user.User;
 
-
-@Component
+@Service
 public class UserServiceBean implements UserService{
 
-	
-	@Autowired 
 	UserDAO userDAO;
 	
 	
+	public UserServiceBean(UserDAO userDAO) {
+		super();
+		this.userDAO = userDAO;
+	}
+
+
 	private static List<User> list;
 	
-	static {
-		list = new ArrayList<User>();
-	}
+	
 	
 	@Override
-	public void add(User user) {
-		list.add(user);
+	public void add(User user) throws ExistUserEmailException {
+		
+	
+		//user maili başka kullanılmış mı kontrol edecem 
+		isUsedBeforeMailAddress(user.getEmail());
+		this.userDAO.save(user);
+	}
+
+
+	private void isUsedBeforeMailAddress(String email) throws ExistUserEmailException {
+		
+		if(this.userDAO.findByEmail(email)!=null  &&  this.userDAO.findByEmail(email).size()!=0)
+			throw new ExistUserEmailException();
 		
 	}
 
@@ -34,13 +45,9 @@ public class UserServiceBean implements UserService{
 	@Override
 	public User getUserById(long id) {
 
-		for (User user : list) {
-			if(user.getId()==id) {
-				return user;
-			}
-		}
+	Optional<User> temp = this.userDAO.findById(id);
 		
-		return null;
+		return temp.get();
 	}
 
 }

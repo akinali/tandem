@@ -1,6 +1,8 @@
 package tr.com.tandempartner.tandem.constant;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +17,24 @@ public class GeneralResponse implements Serializable {
 	
 	private String message;
 	
-	private Object data;
+	private List<Object> elements;
+
+	public GeneralResponse(boolean isSuccessfull, String message,Object data) {
+		super();
+		this.isSuccessfull = isSuccessfull;
+		this.message = message;
+		this.elements= new ArrayList<Object>();
+		this.elements.add(data);
+	}
+	public GeneralResponse(boolean isSuccessfull, String message) {
+		super();
+		this.isSuccessfull = isSuccessfull;
+		this.message = message;
+	
+	}
+	
+	
+	
 	
 	
 	
