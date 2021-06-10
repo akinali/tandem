@@ -14,7 +14,7 @@ import tr.com.tandempartner.tandem.entity.user.User;
 import tr.com.tandempartner.tandem.service.ExistUserEmailException;
 import tr.com.tandempartner.tandem.service.UserService;
 
- 
+@RestController
 public class UserContoller {
 
 	
