@@ -50,6 +50,17 @@
 			<optional>true</optional>
 		</dependency>
 
+	<dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-swagger2</artifactId>
+		    <version>2.9.2</version>
+		</dependency>
+	
+		<dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-swagger-ui</artifactId>
+		    <version>2.9.2</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -66,30 +77,30 @@
 					</excludes>
 				</configuration>
 			</plugin>
-			 <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-    				<addResources>true</addResources>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<addResources>true</addResources>
 				</configuration>
-            </plugin>
-            <plugin>
-            	<groupId>org.codehaus.mojo</groupId>
-            	<artifactId>exec-maven-plugin</artifactId>
-            	   <executions>
-            	   	<execution>
-                		<id>exec-1</id>
-                		<phase>prepare-package</phase>
-                		<goals>
-                		   <goal>exec</goal>
-                		</goals>
-                	</execution>
-                </executions>
-                 <configuration>
-                 	<executable>build_ui_vue.cmd</executable>
-          			<workingDirectory>src/main/js/tandem/</workingDirectory>
-        		</configuration>
-            </plugin>          
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>exec-1</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<executable>build_ui_vue.cmd</executable>
+					<workingDirectory>src/main/js/tandem/</workingDirectory>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>
