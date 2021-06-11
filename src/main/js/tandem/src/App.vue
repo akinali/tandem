@@ -2,24 +2,20 @@
 <div>
   <Menus/>
   <div class="container">
-  <div class="card p-4" style="max-width:600px;margin:auto;">  <Login /></div>
-
-
+  <div class="card p-4" style="max-width:600px;margin:auto;"> 
+     <div class="layout-main">
+			<router-view />
+		</div></div>
   </div>
-
-
-
 </div>
 
 </template>
 
 <script>
-import Login from './pages/Login.vue'
 import xx from './pages/Menus.vue'
 export default {
   name: 'App',
   components: {
-    Login ,
     Menus:xx
   }
 }

@@ -5,7 +5,8 @@
       :type="type ? type : 'text'"
       :class="clazz ? clazz : 'form-control'"
       :id=" id ? id : 'form-control'"
-      :v-model="value"
+      v-model="inputValue"
+      @keyup="inputKeyup"
     />
   </div>
 </template>
@@ -17,7 +18,18 @@ export default {
     type: String,
     id: String,
     clazz: String,
-    'v-model':String
+    value:String
   },
+  data(){
+    return{
+      inputValue:this.value,
+    }
+  },
+  methods:{
+    inputKeyup(){
+      console.log('from child ',this.inputValue); 
+      this.$emit('my-data', this.inputValue); 
+    }
+  }
 };
 </script>
