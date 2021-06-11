@@ -1,4 +1,11 @@
+
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap";
+import InputTandem from "./components/InputTandem"
 import { createApp } from 'vue'
 import App from './App.vue'
 
-createApp(App).mount('#app')
+
+const app = createApp(App);
+app.component("InputTandem",InputTandem);
+app.mount('#app')

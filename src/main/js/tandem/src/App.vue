@@ -1,15 +1,26 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js Appali  dilan kerem eee"/>
+<div>
+  <Menus/>
+  <div class="container">
+  <div class="card p-4" style="max-width:600px;margin:auto;">  <Login /></div>
+
+
+  </div>
+
+
+
+</div>
+
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Login from './pages/Login.vue'
+import xx from './pages/Menus.vue'
 export default {
   name: 'App',
   components: {
-    HelloWorld 
+    Login ,
+    Menus:xx
   }
 }
 </script>
@@ -21,6 +32,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
