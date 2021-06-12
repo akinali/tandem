@@ -36,7 +36,7 @@ public class UserServiceBean implements UserService{
 
 	private void isUsedBeforeMailAddress(String email) throws ExistUserEmailException {
 		
-		if(this.userDAO.findByEmail(email)!=null  &&  this.userDAO.findByEmail(email).size()!=0)
+		if(this.userDAO.findByEmail(email).isPresent())
 			throw new ExistUserEmailException();
 		
 	}

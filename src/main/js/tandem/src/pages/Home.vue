@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="card">
-            Şuanda Anasayfada bulunmaktasınız..
+            Şuanda Anasayfada bulunmaktasınız.. Değil mi
         </div>
     </div>
 </template>

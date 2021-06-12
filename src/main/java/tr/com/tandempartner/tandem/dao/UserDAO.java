@@ -9,7 +9,7 @@ import tr.com.tandempartner.tandem.entity.user.User;
 
 public interface UserDAO  extends JpaRepository<User, Long>{
 
-	List<User> findByEmail(String email);
+	Optional<User> findByEmail(String email);
 	
 	
 }

@@ -98,8 +98,21 @@ export default {
     signupUser() {
       var validation = this.validateUser();
       if (validation) {
-          console.log(validation);
+        var user = {
+          name:this.name,
+          surname:this.surname,
+          email:this.email,
+          password:this.password,
+          wantToLearnLanguage:this.selectedLanguage
+        }
+       this.$http.request("post","api/v1/users",user,true).then(response=>{
+          console.log("signup result..." ,  response);
+        }).catch(error=>{
+          console.log(error);
+        });
+        console.log("ali...")
       }
+
     },
     validateUser() {
       console.log(
@@ -112,6 +125,7 @@ export default {
       if (!this.email) {
         return false;
       }
+      return true;
     },
   },
 };

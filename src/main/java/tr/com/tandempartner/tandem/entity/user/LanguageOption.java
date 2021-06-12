@@ -10,5 +10,12 @@ public enum LanguageOption implements Serializable{
 	LanguageOption(String code, String name) {
 
 	}
+	LanguageOption(String code) {
+		 LanguageOption.valueOf(code);
+	}
+	
+	LanguageOption getLanguageOption(String code){
+		return LanguageOption.valueOf(code);
+	}
 
 }
