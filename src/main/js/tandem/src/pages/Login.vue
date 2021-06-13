@@ -23,12 +23,14 @@
             >Check me out</label
           >
         </div>
-        <button class="btn btn-primary" @click="buttonClicked">Submit</button>
+        <button class="btn btn-primary" @click="login">Login</button>
       </div>
     </div>
   </div>
 </template>
 <script>
+import router from '@/router';
+
 export default {
   name: "Login",
   data() {
@@ -38,8 +40,19 @@ export default {
     };
   },
   methods: {
-    buttonClicked() {
+    login() {
       console.log("button clicked ", this.email , this.password);
+      this.$http.request("post","api/v1/login",{
+        email:this.email,
+        password:this.password
+      }).then(response=>{
+        console.log(response);
+        localStorage.setItem("user",JSON.stringify(response.data.elements[0]));
+        localStorage.setItem("token",response.data.token);
+        localStorage.setItem("isLoggedIn",true);
+        this.$auth.loggedIn(response.data.elements[0])
+        router.push("home");
+      })
     },
   },
 };

@@ -25,7 +25,7 @@
               >
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" active-class="active" to="/"
+              <router-link class="nav-link" active-class="active" to="/home"
                 >Home</router-link>
             </li>
               <li class="nav-item">
@@ -63,18 +63,21 @@
             </li>
           </ul>
           <form class="d-flex">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-              <router-link class="btn btn-outline-success"  to="/login"
+          
+
+             <router-link class="btn btn-outline-success" v-if="$auth.isLoggedIn" to="/login"  @click="logout"
+                >Logout</router-link
+              >
+              <router-link class="btn btn-outline-success" v-else to="/login"
                 >Login</router-link
               >
-             <router-link class="btn btn-outline-success"  to="/signup"
+
+              <router-link class="btn btn-outline-success" v-if="$auth.isLoggedIn" to="/account"
+                >{{$auth.user.name + "\t" +$auth.user.surname}}</router-link>
+
+             <router-link class="btn btn-outline-success"   v-else to="/signup"
                 >Signup</router-link>
-            
+             
           </form>
         </div>
       </div>
@@ -84,5 +87,18 @@
 <script>
 export default {
   name: "xx",
+
+  methods:{
+    logout(){
+      this.$http.request("post","api/v1/logout",null,true).then(response=>{
+        console.log("işlem başarılı",response.message);
+        this.$util.loggedOut();
+        this.$auth.loggedOut();
+      });
+    }
+  }
+
 };
+
+
 </script>

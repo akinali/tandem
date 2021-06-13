@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d21a719"],{bc13:function(a,n,c){"use strict";c.r(n);var e=c("7a23"),d={class:"container"},s=Object(e["f"])("div",{class:"card"}," Şuanda Anasayfada bulunmaktasınız.. Değil mi ",-1);function t(a,n,c,t,i,r){return Object(e["o"])(),Object(e["d"])("div",d,[s])}var i={name:"Home"};i.render=t;n["default"]=i}}]);
-//# sourceMappingURL=chunk-2d21a719.fa8935e8.js.map

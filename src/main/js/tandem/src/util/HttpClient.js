@@ -1,5 +1,4 @@
 import axios from "axios"
-const AUTH_TOKEN="hdfkhdsjfdshjf";
 export default class HttpClient {
   
   
@@ -49,9 +48,9 @@ export default class HttpClient {
 }
 
 function getAxios(isSecure){
-    if(isSecure)
+    if(isSecure && localStorage.getItem("token"))
     {
-     axios.defaults.headers['Authorization'] = AUTH_TOKEN;
+     axios.defaults.headers['Authorization'] = localStorage.getItem("token");
 
     }
     return axios;
