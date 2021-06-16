@@ -1,34 +1,14 @@
 <template>
-    <div class="container">
-        <div class="card">
-            Şuanda Anasayfada bulunmaktasınız.. Değil mi
-
-            <p>
-                {{user}}
-            </p>
-
-        </div>
-    </div>
+ 
+<div class="container">
+ 
+       Home Sayfası : 
+</div>
 </template>
 <script>
-
-export default ({
-    name:"Home",
-    data(){
-        return {
-            user:null
-        }
-    },
-    methods:{
-        getUserInfoFromLocalStorage(){
-            this.user = this.$util.getUserInfo();
-        }
-    },
-    mounted(){
-        this.getUserInfoFromLocalStorage();
-    },
-    created(){
-
-    }
-})
+export default {
+  name: "Home",
+  
+};
 </script>
+

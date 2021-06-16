@@ -2,7 +2,7 @@
 <div>
   <Menus/>
   <div class="container">
-  <div class="card p-4" style="max-width:600px;margin:auto;"> 
+  <div  style=""> 
      <div class="layout-main">
 			<router-view />
 		</div></div>

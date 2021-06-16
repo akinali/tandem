@@ -1,7 +1,9 @@
 package tr.com.tandempartner.tandem.entity.user;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +12,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
@@ -18,6 +23,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -45,6 +51,10 @@ public class User implements UserDetails{
 	
 	private String password;
 	
+	@OneToMany
+	private List<User> friends;
+	
+	
 	@Email
 	@NotBlank 
 	@NotNull
@@ -62,6 +72,8 @@ public class User implements UserDetails{
 		return AuthorityUtils.createAuthorityList("Role_user");
 
 	}
+	
+	
 
 	@Override
 	public String getUsername() {
@@ -91,6 +103,26 @@ public class User implements UserDetails{
 		// TODO Auto-generated method stub
 		return true;
 	}
+	
+	public UserInfo getUserInfo(boolean getMoreInfo) {
+		List<UserInfo> friendsInfo =  new ArrayList<UserInfo>();
+		if(getMoreInfo && friends!=null && friends.size()>0) {
+			friends.forEach(e -> {
+				friendsInfo.add(e.getUserInfo(false));
+			});
+		}
+		UserInfo info = new UserInfo(id, name, surname, friendsInfo, wantToLearnLanguage, email,created);
+		return info;
+		
+	}
+	
+	public UserInfo getUserInfoWithoutFriends() {
+	
+		UserInfo info = new UserInfo(id, name, surname, null, wantToLearnLanguage, email,created);
+		return info;
+		
+	}
+	
 	
 }
 

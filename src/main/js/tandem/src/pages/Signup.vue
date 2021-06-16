@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="card p-4 mx-auto" style="max-width:600px;" >
     Login Sayfasıdır
     <div class="wrapper" style="text-align: left">
       <div id="formContent">

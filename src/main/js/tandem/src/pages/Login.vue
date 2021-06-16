@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="card p-4 " style="max-width:600px;margin:auto;">
     Login Sayfasıdır
     <div class="wrapper" style="text-align: left">
       <div id="formContent">
@@ -52,6 +52,9 @@ export default {
         localStorage.setItem("isLoggedIn",true);
         this.$auth.loggedIn(response.data.elements[0])
         router.push("home");
+      }).catch(error=>{
+        console.log("Hatalı kullanıcı adı veya şifre ...")
+        console.log(error);
       })
     },
   },
