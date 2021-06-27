@@ -9,13 +9,13 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import HttpClient from './util/HttpClient'
 import Util from './util/Util';
-
 router.beforeEach(function(to, from, next) {
     window.scrollTo(0, 0);
     next();
 });
 const app = createApp(App);
 app.use(router);
+
 app.use(VueAxios, axios)
 app.config.globalProperties.$http = HttpClient;
 app.config.globalProperties.$util=Util;

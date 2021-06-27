@@ -26,6 +26,8 @@ public class GeneralResponse implements Serializable {
 		this.elements= new ArrayList<Object>();
 		this.elements.add(data);
 	}
+	
+
 	public GeneralResponse(boolean isSuccessfull, String message) {
 		super();
 		this.isSuccessfull = isSuccessfull;

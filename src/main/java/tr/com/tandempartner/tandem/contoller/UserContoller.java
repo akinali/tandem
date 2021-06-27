@@ -70,7 +70,7 @@ public class UserContoller {
 			
 		User user = authService.getUserDetails(token);
 		List<UserInfo> list = userService.getSuggestionUsers(user);
-		list.remove(user.getUserInfoWithoutFriends());
+
 		GeneralResponse rs =new GeneralResponse(true,"işlem başarılı", list);
 		return rs;
 	}

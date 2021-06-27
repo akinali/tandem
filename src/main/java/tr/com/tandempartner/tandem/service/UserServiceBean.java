@@ -60,9 +60,10 @@ public class UserServiceBean implements UserService{
 		List<UserInfo> userInfos = new ArrayList<UserInfo>();
 
 		users.forEach(a ->{
+			if(a.getId()!=user.getId())
 			userInfos.add(a.getUserInfoWithoutFriends());
 		});
-		
+	//	userInfos.remove(user.getUserInfoWithoutFriends());
 		return userInfos;
 		
 		

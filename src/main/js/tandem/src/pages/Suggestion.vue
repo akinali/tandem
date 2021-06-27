@@ -48,7 +48,7 @@
               <p class="designation">
                 {{ friend.wantToLearnLanguage }} &amp; {{ friend.language }}
               </p>
-              <button @click="addFriend(friend.id)"><i class=""></i>Ekle</button>
+              <button @click="addFriend(friend)"><i class=""></i>Ekle</button>
             </div>
           </div>
         </div>
@@ -79,12 +79,13 @@ export default {
         });
     },
 
-    addFriend(id) {
+    addFriend(friend) {
       this.$http
-        .request("post", "api/v1/friends/"+id, null, true)
+        .request("post", "api/v1/friends/"+friend.id, null, true)
         .then((response) => {
           console.log("added.....",response);
-          this.getSuggestFriends();
+         // this.getSuggestFriends();
+          this.friends=this.friends.filter(f=> f.id!=friend.id);
           this.refreshFriends();
         })
         .catch((error) => {

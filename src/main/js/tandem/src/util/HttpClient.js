@@ -30,21 +30,15 @@ export default class HttpClient {
    static request(type,url,requestBody,isSecure){
         
    return  HttpClient.requestPrivate(type,url,requestBody,isSecure).then(response=>{
-
             if(response.successfull){
                 console.log(response.message); //global a suscces mesajı at..
             }
             else{
                 console.log(response.message); //global a error message ..
             }
-
             return response; 
         })
-
     }
-
-   
-
 }
 
 function getAxios(isSecure){

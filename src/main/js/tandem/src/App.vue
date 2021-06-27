@@ -1,24 +1,30 @@
 <template>
-<div>
-  <Menus/>
-  <div class="container">
-  <div  style=""> 
-     <div class="layout-main">
-			<router-view />
-		</div></div>
-  </div>
-</div>
+  <div>
+    <Menus />
+        <ChatRequest/>
 
+    <div class="container">
+      <div style="">
+        <div class="layout-main">
+          <router-view />
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import xx from './pages/Menus.vue'
+import ChatRequest from './pages/ChatRequest.vue';
+import xx from "./pages/Menus.vue";
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    Menus:xx
-  }
-}
+    Menus: xx,
+    ChatRequest,
+  },
+ 
+
+};
 </script>
 
 <style>

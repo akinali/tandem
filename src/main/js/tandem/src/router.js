@@ -17,6 +17,11 @@ const routes = [
         name: 'signup',
         component: () => import('./pages/Signup.vue'),
     },
+    {
+        path: '/chat-panel',
+        name: 'chat-panel',
+        component: () => import('./pages/MessageChatPanel.vue'),
+    },
 ];
 
 const router = createRouter({
