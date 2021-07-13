@@ -3,6 +3,7 @@ package tr.com.tandempartner.tandem.contoller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -59,10 +60,28 @@ public class ChatController {
 
 		ChatChannelService chs = new ChatChannelService();
 		
-		List<ChatChannelForUsers> channelList = chs.getChatRequestByUserID(user1.getId());
+		ChatChannelForUsers channel = chs.getChannelById(channelId);
 		
 		
-		return new GeneralResponse(true,"işlem başarılı",channelList);
+		return new GeneralResponse(channel!=null ?channel.isAvailableForChat():false,"işlem başarılı",channel);
+		}catch(Exception e ) {
+			return handleException(e);
+		}
+	}
+	
+	@DeleteMapping("/channels/{id}")
+	public GeneralResponse deleteChannelWithToken(@RequestHeader(name="Authorization") String token, @PathVariable(name="id") Long channelId) {
+		
+		
+		try {
+		User user1 = authService.getUserDetails(token);
+
+		ChatChannelService chs = new ChatChannelService();
+		
+		ChatChannelForUsers channel = chs.getChannelById(channelId);
+		channel.cleanUserInfo(user1);
+		
+		return new GeneralResponse(channel!=null ?channel.isAvailableForChat():false,"işlem başarılı",channel);
 		}catch(Exception e ) {
 			return handleException(e);
 		}
@@ -87,6 +106,7 @@ public class ChatController {
 	}
 
 private GeneralResponse handleException(Exception e) {
+	e.printStackTrace();
 	GeneralResponse rs = new GeneralResponse(false, null);
 	if(e instanceof ExistUserEmailException) {
 		rs.setMessage(e.getMessage());

@@ -86,5 +86,20 @@ public class UserServiceBean implements UserService{
 		this.userDAO.save(me);
 	
 	}
+	private List<UserInfo> getFriends(long id){
+		List<UserInfo> friends =  new ArrayList<UserInfo>();
+		this.userDAO.getUserFriends(id).forEach(f ->{
+			friends.add((UserInfo)(f.getUserInfoWithoutFriends()));
+		});
+		return friends;
+		
+	}
+	
+	@Override
+	public UserInfo getUserInfo(User user) {
+		
+		UserInfo info = new UserInfo(user.getId(), user.getName(), user.getSurname(), getFriends(user.getId()), user.getWantToLearnLanguage(), user.getEmail(),user.getCreated());
+		return info;
+	}
 
 }

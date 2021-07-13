@@ -8,19 +8,23 @@ import org.springframework.stereotype.Service;
 
 import tr.com.tandempartner.tandem.dao.UserDAO;
 import tr.com.tandempartner.tandem.entity.user.User;
+import tr.com.tandempartner.tandem.service.UserService;
 
 @Service
 public class AuthService {
 
 	private UserDAO userRepository;
 	
+	private UserService userService;
+	
 	
 	private TokenRepository tokenRepository;
 	
-	public AuthService(UserDAO userRepository,  TokenRepository tokenRepository) {
+	public AuthService(UserDAO userRepository, UserService userService, TokenRepository tokenRepository) {
 		super();
 		this.userRepository = userRepository;
 		this.tokenRepository = tokenRepository;
+		this.userService= userService;
 	}
 
 	public LoginResponse authenticate(Credentials credentials) {
@@ -43,7 +47,7 @@ public class AuthService {
 		LoginResponse loginResponse = 
 				new LoginResponse(true, 
 						"Uygulamaya Giriş Başarılı bir şekilde tamamlandı",
-						token, user);
+						token, userService.getUserInfo(user));
 		
 
 		

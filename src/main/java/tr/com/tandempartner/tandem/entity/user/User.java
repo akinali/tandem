@@ -40,6 +40,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor 
 public class User implements UserDetails{
 
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -51,6 +52,7 @@ public class User implements UserDetails{
 	
 	private String password;
 	
+	@Lazy
 	@OneToMany
 	private List<User> friends;
 	
@@ -104,17 +106,7 @@ public class User implements UserDetails{
 		return true;
 	}
 	
-	public UserInfo getUserInfo(boolean getMoreInfo) {
-		List<UserInfo> friendsInfo =  new ArrayList<UserInfo>();
-		if(getMoreInfo && friends!=null && friends.size()>0) {
-			friends.forEach(e -> {
-				friendsInfo.add(e.getUserInfo(false));
-			});
-		}
-		UserInfo info = new UserInfo(id, name, surname, friendsInfo, wantToLearnLanguage, email,created);
-		return info;
-		
-	}
+
 	
 	public UserInfo getUserInfoWithoutFriends() {
 	

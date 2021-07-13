@@ -1,57 +1,5 @@
 <template>
-  <div>
-    <div class="modal" tabindex="1" id="exampleModal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">
-              Yeni Bir Konuşma İsteğiniz bulunmaktadır..
-            </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <p>
-              Sizinle
-              {{ this.friendInfo.name + " " + this.friendInfo.surname }}
-              konuşmak istiyor
-            </p>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Hayır istemiyorum
-            </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              v-if="this.$auth.isLoggedIn"
-            >
-              Evet Kabul Ediyorum.
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <button
-      type="button"
-      class="btn btn-primary"
-      data-bs-toggle="modal"
-      data-bs-target="#exampleModal"
-      style="display: none"
-      id="modalRunnerButtonId"
-    >
-      Launch demo modal
-    </button>
-  
-  </div>
+  <div></div>
 </template>
 <script>
 export default {
@@ -63,6 +11,7 @@ export default {
     };
   },
   methods: {
+    
     setTimeoutForChat() {
       var self = this;
       setInterval(function () {
@@ -81,18 +30,40 @@ export default {
                     self.hasRequest = true;
                     self.friendInfo = self.$util
                       .getUserInfo()
-                      .friends.filter((e) => (e.id = self.channel.user1_id));
-                    document.getElementById("modalRunnerButtonId").click();
+                      .friends.find((e) => (e.id = self.channel.user1_id));
+                    let result = confirm(
+                      self.friendInfo.name +
+                        " " +
+                        self.friendInfo.surname +
+                        " seninle konuşmak istiyor. Konuşmaya katılmak istermisiniz?"
+                    );
+                    if (result == true) {
+                      console.log("You pressed OK!");
+                      self.acceptRequest();
+                    } else {
+                      console.log("You pressed Cancel!");
+
+                    }
                   }
                 }
               }
             });
         }
-      }, 2000);
+      }, 5000);
     },
+    acceptRequest() {
+      this.goToChatWithFriend();
+    },
+    goToChatWithFriend() {
+      this.$router.push({
+        path: "/chat-panel",
+        query: { data: this.friendInfo.id },
+      });
+    },
+    
   },
-  mounted(){
+  mounted() {
     this.setTimeoutForChat();
-  }
+  },
 };
 </script>

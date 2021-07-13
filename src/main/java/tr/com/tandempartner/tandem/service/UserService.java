@@ -18,4 +18,6 @@ public interface UserService {
 
 	void addFriend(User user, Long id);
 
+	UserInfo getUserInfo(User user);
+
 }

@@ -58,7 +58,7 @@ public class UserContoller {
 		System.out.println(id);
 		
 		User user = userService.getUserById(id);
-		GeneralResponse rs =new GeneralResponse(true,"işlem başarılı", user.getUserInfo(true));
+		GeneralResponse rs =new GeneralResponse(true,"işlem başarılı", userService.getUserInfo(user));
 		//id ile servisten kişi alınacak ve general response a setlenecek....
 		return rs;
 	}

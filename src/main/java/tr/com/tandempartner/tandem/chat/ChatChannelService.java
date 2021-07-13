@@ -54,4 +54,12 @@ public class ChatChannelService {
 	public void removeInList(ChatChannelForUsers obj) {
 		this.channels.remove(obj);
 	}
+
+	public ChatChannelForUsers getChannelById(Long channelId) {
+		for (ChatChannelForUsers chatChannelForUsers : channels) {
+			if(chatChannelForUsers.getId()==channelId) {
+				return chatChannelForUsers;
+			}
+		}		return null;
+	}
 }

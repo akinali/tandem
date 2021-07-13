@@ -22,6 +22,11 @@ const routes = [
         name: 'chat-panel',
         component: () => import('./pages/MessageChatPanel.vue'),
     },
+    {
+        path: '/',
+        name: 'index',
+        component: () => import('./pages/Home.vue'),
+    },
 ];
 
 const router = createRouter({

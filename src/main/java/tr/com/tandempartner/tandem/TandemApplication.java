@@ -10,7 +10,7 @@ import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
-import tr.com.tandempartner.tandem.chatServer.ServerSocketImpl;
+import tr.com.tandempartner.tandem.chatServer.WebSocketImpl;
 
 @EnableSwagger2
 @SpringBootApplication
@@ -21,7 +21,8 @@ public class TandemApplication {
 	
 		SpringApplication.run(TandemApplication.class, args);
 		
-		new Thread(new ServerSocketImpl()).start();
+	
+		new WebSocketImpl().start();
 	}
 	
 	@Bean

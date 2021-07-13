@@ -8,14 +8,17 @@
         <label v-if="disabled">Aktifleşmesi bekleniyor...</label>
       </div>
       <div class="panel-body msg_container_base" style="height: 700px">
-        <div v-for="message in messages" :key="message">
+        <div v-for="msg in messages" :key="msg">
+          <MessageSent v-if="msg.isSent" :message="msg" :me="user" />
+
           <MessageRecieved
-            v-if="message.isSent"
-            :message="message"
+           
+            v-else 
+            :message="msg"
             :friend="friend"
           />
-          <MessageSent v-else :message="message" :me="user" />
-        </div>
+        </div> 
+
       </div>
       <div class="panel-footer">
         <div class="input-group">
@@ -26,6 +29,7 @@
             placeholder="Write your message here..."
             v-model="message"
             :disabled="disabled"
+            v-on:keyup.enter="sendMessage"
           />
           <span class="input-group-btn">
             <button class="btn btn-primary" @click="sendMessage" id="btn-chat">
@@ -42,13 +46,13 @@ import MessageRecieved from "@/components/MessageRecieved";
 import MessageSent from "@/components/MessageSent";
 export default {
   components: {
-    MessageRecieved,
-    MessageSent,
+   MessageRecieved,
+   MessageSent,
   },
   data() {
     return {
       friend: null,
-      connection:null,
+      connection: null,
       user: null,
       messages: [],
       message: null,
@@ -92,39 +96,73 @@ export default {
     sendMessage() {
       //
       console.log("bu kullanıcı mesajıdır . ", this.message);
-
+      this.messages.push({isSent:true,message:this.message})
       this.connection.send(this.message);
       this.message = "";
+      
     },
 
     checkRequestForChat() {
-      setTimeout(function () {
-        if (this.channel.id != null) {
-          this.$http
-            .request("get", "api/v1/channels/" + this.channel.id, null, true)
+      let self = this;
+      let myInterval = setInterval(function () {
+        if (self.channel.id != null) {
+          self.$http
+            .request("get", "api/v1/channels/" + self.channel.id, null, true)
             .then((res) => {
               console.log(res);
-              if (res.data.success) {
-                this.disabled = false;
+              if (res.data.successfull ) {
+                clearInterval(myInterval);
+                self.disabled = false;
+                self.webSocketCreater();
               }
             });
         }
-      }, 10000);
+      }, 3000);
     },
     webSocketCreater() {
       console.log("Starting connection to WebSocket Server");
-      this.connection = new WebSocket("ws://127.0.0.1:9090");
+      let self = this;
 
-      this.connection.onmessage = function (event) {
-        console.log(event);
-      };
-      this.connection.send(this.channel.id+"_"+this.channel.user1_id+"_"+this.channel.user2_id+"_"+localStorage.getItem("token"))
+      self.connection = new WebSocket("ws://192.168.1.36:4444");
 
-      this.connection.onopen = function (event) {
+      self.connection.onopen = function (event) {
         console.log(event);
         console.log("Successfully connected to the echo websocket server...");
       };
+
+      let messageFirst =
+        self.channel.id +
+        "__-__" +
+        self.channel.user1_id +
+        "__-__" +
+        self.channel.user2_id +
+        "__-__" +
+        localStorage.getItem("token");
+
+          // Log errors
+      this.connection.onerror = function(error) {
+        console.log("WebSocket Error " + error);
+      };
+
+      // Log messages from the server
+      this.connection.onmessage = function(e) {
+        console.log("Server: " + e.data);
+        if(e.data && e.data!="Ping" )
+          self.handleIncomeMessage(e.data)
+
+};
+      setTimeout(function(){self.connection.send(messageFirst);},1000)
+      
     },
+    
+    handleIncomeMessage(newMessage) {
+      console.log(newMessage);
+      this.messages.push({isSent:false,message:newMessage})
+    }
+
+
+     
+    
   },
   mounted() {
     var friendId = this.$router.currentRoute.value.query.data;
@@ -133,6 +171,13 @@ export default {
     this.disabled = true;
     this.checkRequestForChat();
   },
+  unmounted(){
+    //1 channel yönetiminden sil rest apisi ile
+    this.$http.request("delete","api/v1/channels/"+ this.channel.id, null, true).then(res=>{
+      console.log(res);
+    })
+    this.connection.send("CLOSED_ME_BYE")
+  }
 };
 </script>
 <style scoped>
